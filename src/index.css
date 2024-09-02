@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes rotateY {
+  from {
+    transform: rotateY(0deg);
+  }
+
+  to {
+    transform: rotateY(180deg);
+  }
+}
+
+@keyframes up {
+  from {
+    margin-top: -10px;
+    opacity: 1;
+  }
+
+  to {
+    margin-top: -150px;
+    opacity: 0;
+    
+  }
+}
+
+@keyframes suffle {
+  0% {    
+    opacity: 1;
+    z-index: 20;
+  }
+  80% {
+    opacity: 0.9;
+  }
+  90% {
+    opacity: 0.6;
+    
+  }
+  99% {
+    opacity: 0.1;
+    height: 100vh;
+    z-index: 20;    
+  }
+  100% {    
+    opacity: 0;
+    z-index: 0;
+    height: 0;
+   
+  }
+}
+@keyframes suffle-card {
+  0% {
+    margin-left: -80px;
+  }
+  85% {
+    margin-left: -80px;
+  }
+
+  100% {
+    margin-left: -20px;
+  }
+}
+@keyframes textBreathe {
+  0% {
+    opacity: 1;
+  }
+  20% {
+    opacity: 0.2;
+  }
+  40% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 0.2;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.rotate-animation {
+  animation-delay: 1s;
+  animation: rotateY 2s;
+  animation-fill-mode: forwards;
+}
+
+.up-animation {
+  animation: up 2s;
+  animation-fill-mode: forwards;
+}
+
+.suffle-animation {
+  animation: suffle 4s;
+  animation-fill-mode: forwards;
+}
+
+.textBreathe-animation {
+  animation: textBreathe 4s;
+}
+
+.suffle-card-animation{  
+  
+  animation-timing-function: ease;
+  animation:suffle-card 5s;
+  animation-fill-mode: forwards;
+}
