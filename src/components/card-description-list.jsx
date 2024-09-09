@@ -10,7 +10,7 @@ const CardDescriptionList = ({ cardList }) => {
             idx == 4 ? "環境" : idx === 5 ? "內心想法" : idx === 6 && "結果"
        const singleCardDeccription = cardDeccription.filter((singleCard) => singleCard.id === card.card)
         return card.position ?
-            <div key={card.card} className="flex bg-slate-200 opacity-95 rounded-md p-1 mb-2">
+            <div key={card.card} className="flex bg-slate-200  rounded-md p-1 mb-2">
                 <CardImg key={card.card} className="w-24 p-2 rounded-sm" number={card.card} />
                 <div className="p-2">
                     <p className="text-lg font-bold">{cardPosition}</p>
