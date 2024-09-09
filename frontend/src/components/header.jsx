@@ -14,13 +14,13 @@ const Header = ({
     return <div className="fixed w-full z-10">
         <div className="relative">
         <div className="flex absolute left-2 top-2">
-            <CardHistoryButton historyOption={historyOption} CardHistoryHandler={CardHistoryHandler} />
-            {cardList.length === 7 &&
-            <CardDescriptionButtton stephandler={stephandler} />}
+            <CardHistoryButton historyOption={historyOption} CardHistoryHandler={CardHistoryHandler} />            
+           
         </div>
         {
         cardList.length === 7 &&
             <div className="flex absolute right-2 top-2">
+                <CardDescriptionButtton stephandler={stephandler} />
                 {!openHistory && <CardSave cardList={cardList} CardSaveHandler={CardSaveHandler} />}
                 <CardShuffleButton CardShuffleHandler={CardShuffleHandler} />               
             </div>
