@@ -15,13 +15,13 @@ const Header = ({
         <div className="relative">
         <div className="flex absolute left-2 top-2">
             <CardHistoryButton historyOption={historyOption} CardHistoryHandler={CardHistoryHandler} />
+            <CardDescriptionButtton stephandler={stephandler} />
         </div>
         {
         cardList.length === 7 &&
             <div className="flex absolute right-2 top-2">
                 {!openHistory && <CardSave cardList={cardList} CardSaveHandler={CardSaveHandler} />}
-                <CardShuffleButton CardShuffleHandler={CardShuffleHandler} />
-                <CardDescriptionButtton stephandler={stephandler} />
+                <CardShuffleButton CardShuffleHandler={CardShuffleHandler} />               
             </div>
         }
 
