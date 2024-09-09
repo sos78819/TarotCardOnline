@@ -15,7 +15,8 @@ const Header = ({
         <div className="relative">
         <div className="flex absolute left-2 top-2">
             <CardHistoryButton historyOption={historyOption} CardHistoryHandler={CardHistoryHandler} />
-            <CardDescriptionButtton stephandler={stephandler} />
+            {cardList.length === 7 &&
+            <CardDescriptionButtton stephandler={stephandler} />}
         </div>
         {
         cardList.length === 7 &&
