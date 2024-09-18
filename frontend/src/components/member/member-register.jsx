@@ -22,6 +22,40 @@ const MemberRegister = () => {
     })
     const onSubmit = (data) => {
         console.log(data)
+        var url = 'http://localhost:8081/register';
+        fetchData(url, data)
+
+
+    }
+    async function fetchData(url, data) {
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            console.log('result', result);
+            if (result === "Error") {
+                alert('註冊失敗!')
+            }
+            else if (result === "帳號已存在") {
+                alert('帳號已存在!')
+            } else {
+                alert('註冊成功!')
+            }
+            return result;
+        } catch (error) {
+            console.error('Error:', error);
+            throw error;
+        }
     }
 
     return (<div>
@@ -48,7 +82,7 @@ const MemberRegister = () => {
                     placeholder="輸入密碼" type="password" />
                 <p className="text-sm p-1 text-red-500">{errors.password?.message}</p>
             </div>
-            <button className='font-bold border-2 border-white p-1 rounded-md bg-black text-white' type="submit">送出</button>
+            <button className='font-bold border-2 mt-1 border-white p-1 rounded-md bg-black text-white' type="submit">送出</button>
         </form>
 
     </div>
