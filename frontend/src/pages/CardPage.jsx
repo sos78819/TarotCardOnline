@@ -3,6 +3,8 @@ import { QuestionType } from '../components/question-form/question-type-form';
 import { CardDrawPage } from '../components/card-draw-page';
 import { CardPageContainer } from "../components/card-page-container";
 import { Header } from "../components/header";
+import { useState,useEffect } from "react";
+import {useCardHistory} from "../js/useCardHistory"
 const CardPage = () => {
     const {
         CardDrawHandler,
@@ -11,15 +13,17 @@ const CardPage = () => {
         stephandler,
         CardHistoryHandler,
         CardSaveHandler,
-        step, Option, cardList, Cards, openHistory, historyOption
+        step, Option, cardList, Cards, openHistory,historyOption
 
     } = useClickHandler()
+
 
     return (
         <CardPageContainer>
             <Header cardList={cardList}
-                historyOption={historyOption}
+               
                 openHistory={openHistory}
+                historyOption={historyOption}
                 CardSaveHandler={CardSaveHandler}
                 CardHistoryHandler={CardHistoryHandler}
                 CardShuffleHandler={CardShuffleHandler}
@@ -29,7 +33,7 @@ const CardPage = () => {
             {parseInt(step) < 3 ?
                 <QuestionType CardHistoryHandler={CardHistoryHandler} step={step}
                     typeChange={typehandler} typeOption={Option} stephandler={stephandler}
-                    historyOption={historyOption}
+
                 />
 
                 :
@@ -37,7 +41,7 @@ const CardPage = () => {
                     stephandler={stephandler}
                     CardDrawHandler={CardDrawHandler}
                     CardHistoryHandler={CardHistoryHandler}
-                    historyOption={historyOption}
+
                 />
             }
         </CardPageContainer>

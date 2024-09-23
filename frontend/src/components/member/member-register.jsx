@@ -2,10 +2,12 @@ import { Lebel } from "../ui/lebel"
 import { Input } from "../ui/input"
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
+import { useNavigate } from "react-router-dom";
 import * as yup from "yup"
 
 
 const MemberRegister = () => {
+    const navigate = useNavigate();
     const schema = yup
         .object({
             nickName: yup.string().required("請填寫暱稱!").max(10, '暱稱最多可輸入10個字符'),
@@ -50,6 +52,7 @@ const MemberRegister = () => {
                 alert('帳號已存在!')
             } else {
                 alert('註冊成功!')
+                navigate("/member/login")  
             }
             return result;
         } catch (error) {

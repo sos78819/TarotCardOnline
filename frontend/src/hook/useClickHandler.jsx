@@ -1,17 +1,22 @@
-import { useState } from "react";
+import { useState} from "react";
 import { useCardShuffle } from "./useCardShuffle";
-import { defaultOption, fortuneOption, loveOption, careerOption,QuestionTypeName } from "../js/questionOption";
+import { defaultOption, fortuneOption, loveOption, careerOption, QuestionTypeName } from "../js/questionOption";
+import { useCardHistory } from "../js/useCardHistory";
+import { useNavigate } from "react-router-dom";
+import { useLogin } from "./useLogin";
+const useClickHandler = () => { 
 
-const useClickHandler = () => {
-  const CardHistory = localStorage.getItem("CardHistory") ? JSON.parse(localStorage.getItem("CardHistory")) : []
   const { tarotCards, setShuffle } = useCardShuffle()
   const [cardList, setCardList] = useState([])
   const [Cards, setCards] = useState(tarotCards)
-  const [openHistory, setOpenHistory] = useState(false)
-  const [historyOption, setHistoryOption] = useState(CardHistory)
+  const [openHistory, setOpenHistory] = useState(false) 
   const [step, setStep] = useState(1)
   const [QuestionType, setQuestionType] = useState('love')
   const [Option, setOption] = useState(defaultOption)
+  const CardHistory = useCardHistory([]);
+  const navigate = useNavigate();
+  const {Logout} = useLogin()
+  const [historyOption, setHistoryOption] = useState(CardHistory)
 
 
   function typehandler(type) {
@@ -66,30 +71,49 @@ const useClickHandler = () => {
   }
 
   function CardSaveHandler(cardList) {
-    let CardHistory = localStorage.getItem('CardHistory') ? JSON.parse(localStorage.getItem('CardHistory')) : []
-    let isRecord = CardHistory.map(list => list.type === QuestionType).some(Boolean);
-    console.log('isRecord', isRecord)
-
-    if (isRecord) {      
-      var yes = confirm(`[${QuestionTypeName[QuestionType]}]紀錄將被覆蓋`);
-    }else{
-      var yes = confirm(`確認儲存？`);
+    const account = localStorage.getItem('account');
+    
+    const data = {
+      account: account,
+      historyList:cardList,
+      type:QuestionType
     }
-    if (yes) {
-      let newCardHistory = CardHistory.filter((list) =>
-        list.type !== QuestionType
-      )
+    var url = 'http://localhost:8081/saveCard';
+    fetchData(url, data)
+  }
+  async function fetchData(url, data) {
+    try {
+      const token = localStorage.getItem('token')
+      const response = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization': `bearer ${token}`
+        }
+      });
 
-      newCardHistory.push({ type: QuestionType, historyList: cardList })
-      localStorage.setItem('CardHistory', JSON.stringify(newCardHistory));
-      setHistoryOption(newCardHistory)
-      alert('成功儲存');
-    } else {
-      alert('放棄儲存');
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.log(response.status)
+        //強制登出 
+        Logout()
+        navigate("/member/login")            
+        throw new Error(errorData.message); 
+        
+      }
 
+      const result = await response.json();
+      localStorage.setItem("CardHistory", JSON.stringify(result));
+      setHistoryOption(result)
+      alert('儲存成功!')
+
+      return result;
+    } catch (error) {       
+      console.error('Error:', error);
+      alert('請重新登入!')  
+      throw error;
     }
-
-
   }
 
   function CardHistoryHandler(Type) {
@@ -104,7 +128,7 @@ const useClickHandler = () => {
   }
   return {
     CardDrawHandler, CardShuffleHandler, typehandler, stephandler, CardSaveHandler, CardHistoryHandler,
-    step, Option, cardList, Cards, openHistory, historyOption
+    step, Option, cardList, Cards,historyOption, openHistory
   }
 }
 

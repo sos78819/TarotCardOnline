@@ -1,8 +1,9 @@
 import { QuestionTypeName } from "../js/questionOption"
 const CardHistoryMenu = ({ CardHistoryHandler, historyOption }) => {
 
-    return <div className="text-sm fixed text-start rounded-md h-0 overflow-hidden group-hover:h-auto">
-        <ul>
+    return <>
+    <h4 className="font-bold p-1 rounded-md bg-sky-100">占卜紀錄</h4>
+        <ul className="pt-1">
             {historyOption.length !== 0 ?
                 historyOption.map((list, idx) => {
                     const QuestionName = QuestionTypeName[list.type]
@@ -11,7 +12,7 @@ const CardHistoryMenu = ({ CardHistoryHandler, historyOption }) => {
 
             }
         </ul>
-    </div>
+        </>
 }
 
 
